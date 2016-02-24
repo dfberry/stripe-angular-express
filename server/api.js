@@ -38,34 +38,17 @@ module.exports = function(wagner) {
           },
           function(err, charge) {
               
-            console.log("api.js::Stripe.charges.create" + "\n");  
+            //console.log("err = " + JSON.stringify(err) + "\n\n");
+            //console.log("charge=" + JSON.stringify(charge)+ "\n\n");  
               
-            if (err && err.type === 'StripeCardError') {
-
-                console.log("api.js::Stripe.charges.create" + " err && err.type === 'StripeCardError'\n");  
-
-              return res.
-                status(status.BAD_REQUEST).
-                json({ error: err.toString() });
-            }
             if (err) {
-            console.log("api.js::Stripe.charges.create" + " err \n");                
-                
-              console.log(err);
+
               return res.
                 status(status.INTERNAL_SERVER_ERROR).
-                json({ error: err.toString() });
+                json({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
-            console.log("api.js::Stripe.charges.create" + " no err \n");           
-            //req.user.data.cart = [];
-            //req.user.save(function() {
-              // Ignore any errors - if we failed to empty the user's
-              // cart, that's not necessarily a failure
-
-              // If successful, return the charge id
-              return res.json({ id: charge.id });
-            //});
-          //});
+         
+            return res.json({ id: charge.id });
          
       }); 
     };

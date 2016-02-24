@@ -37,8 +37,14 @@
         <button class="btn btn-default" ng-click="checkout()">
             Check Out
         </button>
-        <div class="checkout-error" ng-show="error">
-            {{error}}
+        <div class="error checkout-error msg" ng-show="error">
+            {{error}}  
+        </div>
+        <div class="error checkout-error chargeid" ng-show="error">
+            Charge: {{charge}} 
+        </div>
+        <div class="error checkout-error requestid" ng-show="error">
+            Request: {{request}}
         </div>
         <div class="checkout-success" ng-show="checkedOut">
             Checked out successfully!

@@ -35,10 +35,23 @@ exports.CheckoutController = function($scope, $cart, $http) {
 
       $http.
         post('/api/v1/checkout', { stripeToken: response.id, cart: $scope.cart }).
-        success(function(data) {
-          console.log("returned from api call");
+        then(function(data) {
+          console.log("success returned from api call: " + data);
           $scope.checkedOut = true;
           
+        },
+        function(response){
+            console.log("failure from checkout in controllers.js --");
+            console.log("response.status=" + response.status);            
+            console.log("response.data=" + JSON.stringify(response.data));            
+            console.log("response.header=" + response.header);            
+            console.log("response.config=" + JSON.stringify(response.config));            
+            console.log("charge:" + response.data.charge);
+            console.log("reqeust:" + response.data.request);
+            
+            $scope.error = response.data.error;
+            $scope.charge = response.data.charge;
+            $scope.request = response.data.request;
         });
     });
     
