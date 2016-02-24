@@ -38,19 +38,17 @@ module.exports = function(wagner) {
           },
           function(err, charge) {
               
-            //console.log("err = " + JSON.stringify(err) + "\n\n");
-            //console.log("charge=" + JSON.stringify(charge)+ "\n\n");  
+            console.log("err = " + JSON.stringify(err) + "\n\n");
+            console.log("charge=" + JSON.stringify(charge)+ "\n\n");  
               
             if (err) {
-
+            
               return res.
                 status(status.INTERNAL_SERVER_ERROR).
                 json({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
-            
-            console.log(JSON.stringify(charge));
          
-            return res.json({ id: charge.id , charge: charge});
+            return res.json(charge);
          
       }); 
     };
