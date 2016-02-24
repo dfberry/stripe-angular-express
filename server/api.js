@@ -12,15 +12,10 @@ module.exports = function(wagner) {
   api.post('/checkout', wagner.invoke(function(Stripe) {
             
     return function(req, res) {
-      /*if (!req.user) {
-        return res.
-          status(status.UNAUTHORIZED).
-          json({ error: 'Not logged in' });
-      }*/
 
-    console.log(JSON.stringify(req.body.stripeToken));  
-    console.log(JSON.stringify(req.body.cart));  
-    return res.json({ id: 1 });
+    //console.log(JSON.stringify(req.body.stripeToken));  
+    //console.log(JSON.stringify(req.body.cart));  
+    //return res.json({ id: 1 });
 
       // Populate the products in the user's cart
 //      req.user.populate({ path: 'data.cart.product', model: 'Product' }, function(error, user) {
@@ -33,13 +28,13 @@ module.exports = function(wagner) {
         });
 */
         // And create a charge in Stripe corresponding to the price
-/*        Stripe.charges.create(
+        Stripe.charges.create(
           {
             // Stripe wants price in cents, so multiply by 100 and round up
-            amount: Math.ceil(totalCostUSD * 100),
+            amount: req.body.cart.totalprice,
             currency: 'usd',
             source: req.body.stripeToken,
-            description: 'Example charge'
+            description: req.body.cart.name
           },
           function(err, charge) {
               
@@ -47,7 +42,7 @@ module.exports = function(wagner) {
               
             if (err && err.type === 'StripeCardError') {
 
-            console.log("api.js::Stripe.charges.create" + " err && err.type === 'StripeCardError'\n");  
+                console.log("api.js::Stripe.charges.create" + " err && err.type === 'StripeCardError'\n");  
 
               return res.
                 status(status.BAD_REQUEST).
@@ -62,17 +57,17 @@ module.exports = function(wagner) {
                 json({ error: err.toString() });
             }
             console.log("api.js::Stripe.charges.create" + " no err \n");           
-            req.user.data.cart = [];
-            req.user.save(function() {
+            //req.user.data.cart = [];
+            //req.user.save(function() {
               // Ignore any errors - if we failed to empty the user's
               // cart, that's not necessarily a failure
 
               // If successful, return the charge id
               return res.json({ id: charge.id });
-            });
-          });
+            //});
+          //});
          
-      }); */
+      }); 
     };
   }));
 
