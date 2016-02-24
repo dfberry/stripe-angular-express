@@ -1,7 +1,4 @@
 {
-  "facebookClientId": "222234301450250",
-  "facebookClientSecret": "af123fbbf06c9f55c9e2eb9902ed4f09",
   "stripeKey": "sk_test_WqKypPUzUwdHSgZLT3zWZmBq",
-  "stripePublishableClientKey": "pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP",
-  "openExchangeRatesKey": "9eb9e8eda41f4751a102fc858f306652"
+  "stripePublishableClientKey": "pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP"
 }

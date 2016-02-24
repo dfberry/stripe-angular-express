@@ -1,3 +1,4 @@
+/* comment */
 var controllers = require('./controllers');
 var directives = require('./directives');
 var services = require('./services');
