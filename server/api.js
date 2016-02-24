@@ -47,8 +47,10 @@ module.exports = function(wagner) {
                 status(status.INTERNAL_SERVER_ERROR).
                 json({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
+            
+            console.log(JSON.stringify(charge));
          
-            return res.json({ id: charge.id });
+            return res.json({ id: charge.id , charge: charge});
          
       }); 
     };
