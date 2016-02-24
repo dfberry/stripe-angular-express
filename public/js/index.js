@@ -20,9 +20,3 @@ _.each(services, function(factory, name) {
 
 var app = angular.module('stripe-app', ['stripe-app.components', 'ngRoute']);
 
-app.config(function($routeProvider) {
-  $routeProvider.
-    when('/checkout', {
-      template: '<checkout></checkout>'
-    });
-});

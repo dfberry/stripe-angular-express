@@ -1,0 +1,48 @@
+<div class="checkout-wrapper">
+    <div class="cart">
+        <div class="Name">
+            Item:
+            <input type="text" ng-model="cart.name" />
+        </div>
+        <div class="quantity">
+            Quantity:
+            <input type="number" ng-model="cart.quantity" />
+        </div>
+        <div class="price">
+            Price per item:
+            <input type="number" ng-model="cart.price" />
+        </div>
+        <div class="totalprice">
+            Price:
+            <input type="number" ng-model="cart.totalprice" />
+        </div>
+    </div>
+    <div class="checkout">
+        <h1>
+      <i class="fa fa-credit-card"></i>
+      Payment
+    </h1>
+        <div class="credit-card-input">
+            Credit Card Number:
+            <input type="text" ng-model="stripeToken.number" />
+        </div>
+        <div class="credit-card-expires">
+            Credit Card Expiration Data:
+            <input type="text" size="3" ng-model="stripeToken.exp_month" />/<input type="text" size="5"  ng-model="stripeToken.exp_year" />
+        </div>      
+        <div class="credit-card-cvc">
+            CVC:
+            <input type="text" ng-model="stripeToken.cvc" />
+        </div>             
+        <button class="btn btn-default" ng-click="checkout()">
+            Check Out
+        </button>
+        <div class="checkout-error" ng-show="error">
+            {{error}}
+        </div>
+        <div class="checkout-success" ng-show="checkedOut">
+            Checked out successfully!
+        </div>
+    </div>
+
+</div>
