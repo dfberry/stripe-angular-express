@@ -1638,9 +1638,7 @@ module.exports = {
 }.call(this));
 
 },{}],3:[function(require,module,exports){
-exports.ConfirmController = function($scope, $cart, $customer, $http) {
-
-    Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
+exports.CheckoutController = function($scope, $cart, $card, $customer, $charge, $http) {
 
     $scope.donations = {
         donationOptions: [
@@ -1677,52 +1675,109 @@ exports.ConfirmController = function($scope, $cart, $customer, $http) {
         ]};
     $scope.years.selectedOption =  $scope.years.yearOptions[2];
 
-    //console.log($scope.years);
-    //console.log($scope.months);
- 
     $scope.init = function(){
         $scope.cart = $cart;
         $scope.customer = $customer;
+        $scope.card = $card;
+        
+        console.log("card=" + JSON.stringify($scope.card ));
+        console.log("cart=" + JSON.stringify($scope.cart ));
+        console.log("customer=" + JSON.stringify($scope.customer ));
    }
     
     $scope.update = function() {
         $scope.cart.calcTotalPrice();
     }
 
-    $scope.confirm = function() {
+    $scope.checkout = function() {
        $scope.error = null;
        
-       $scope.stripeToken.name = $customer.name
-       console.log($scope.stripeToken);
-       /*
-       Stripe.card.createToken($scope.stripeToken, function(status, response) {
-            if (status.error) {
-                console.log("stripe token not created");
-                $scope.error = status.error;
-                return;
-            } else {
-                $scope.stripe_token = response.id;
-                console.log("stripe token created = " + response.id);
-            }
-        });
-        */
+       // update card
+       $scope.card.data.name = $customer.name
+       $scope.card.data.exp_month = $scope.months.selectedOption.id;
+       $scope.card.data.exp_year = $scope.years.selectedOption.id;
+       
+       // update cart
+       $scope.cart.data.price = $scope.donations.selectedOption.id;
+       $scope.cart.calcTotalPrice();
+       
+       var charge = {
+           "customer": $scope.customer,
+           "card": $scope.card.data,
+           "cart": $scope.cart.data
+       }
+       
+       //console.log("charge=" + JSON.stringify(charge));    
+    
+       $charge.commit(charge, function(results){
+           console.log("results=" + JSON.stringify(results));  
+           return;  
+       });
+ 
+       return;
     }
+    
+    $scope.buttonTest = function(){
+        console.log("buttonTest");
+        return;
+    }
+    
+  $scope.checkout2 = function() {
+    
+    $scope.error = null;
+    
+    $scope.hardcart = {
+      name: "Donation",
+      quantity: 1,
+      price: 1000,
+      totalprice: 1000
+  };
+
+    $scope.stripeToken = {
+        number: '4242424242424242',
+        cvc: '123',
+        exp_month: '12',
+        exp_year: '2016'
+    };
+    Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
+    Stripe.card.createToken($scope.stripeToken, function(status, response) {
+        
+        
+      if (status.error) {
+        console.log("stripe token not created");
+        $scope.error = status.error;
+        return;
+      } else {
+          console.log("stripe token created = " + response.id);
+      }
+
+      $http.
+        post('/api/v1/checkout', { stripeToken: response.id, cart: $scope.hardcart }).
+        then(function(data) {
+          console.log("success returned from api call: " + data);
+          $scope.checkedOut = true;
+          
+        },
+        function(response){
+            console.log("failure from checkout in controllers.js --");
+            console.log("response.status=" + response.status);            
+            console.log("response.data=" + JSON.stringify(response.data));            
+            console.log("response.header=" + response.header);            
+            console.log("response.config=" + JSON.stringify(response.config));            
+            console.log("charge:" + response.data.charge);
+            console.log("reqeust:" + response.data.request);
+            
+            $scope.error = response.data.error;
+            $scope.charge = response.data.charge;
+            $scope.request = response.data.request;
+        });
+    });   
+  } 
     
     $scope.init();
 };
 
-
-exports.CheckoutController = function($scope, $cart, $http) {
-
-};
-
 },{}],4:[function(require,module,exports){
-exports.confirm = function() {
-  return {
-    controller: 'ConfirmController',
-    templateUrl: '/public/templates/confirm.html'
-  };
-};
 exports.checkout = function() {
   return {
     controller: 'CheckoutController',
@@ -1770,6 +1825,7 @@ exports.$cart = function($http) {
       price: 1000,
       totalprice: 0
   };
+  
 
   calcTotalPrice();
 
@@ -1778,7 +1834,20 @@ exports.$cart = function($http) {
       calcTotalPrice: calcTotalPrice
   };
 };
-
+exports.$card = function(){
+    
+    var data = {
+        number: '4242424242424242',
+        cvc: '123',
+        exp_month: '',
+        exp_year: ''
+    };
+    
+  return {
+      data: data
+  };    
+};
+  
 exports.$customer = function($http){
     
     var data = {
@@ -1795,5 +1864,63 @@ exports.$customer = function($http){
     
 }
 
+exports.$charge = function($http){
+    
+    var commit = function (charge, callback){
+        
+        console.log("charge: " + JSON.stringify(charge));
+        
+        var result = {};
+        callback(result);
 
+/*
+
+        Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
+        
+        Stripe.card.createToken(donationCharge.stripeToken, function(status, response) {
+            
+            
+            if (status.error) {
+                console.log("stripe token not created");
+                result.error = status.error;
+                callback(result);
+            } else {
+                result.token.response_id = response.id;
+                console.log("stripe token created = " + response.id);
+            }
+
+            $http.
+                post('/api/v1/checkout', { stripeToken: result.token.response_id, cart: donationCharge.cart }).
+                then(function(data) {
+                    
+                    result.charge.result = data;
+                    console.log("success returned from api call: " + JSON.stringify(data));
+                    callback(result);
+                },
+                function(response){
+                    
+                    result.charge.result.error = response;
+                    
+                    console.log(JSON.stringify(response));
+                    
+                    console.log("failure from checkout in controllers.js --");
+                    console.log("response.status=" + response.status);            
+                    console.log("response.data=" + JSON.stringify(response.data));            
+                    console.log("response.header=" + response.header);            
+                    console.log("response.config=" + JSON.stringify(response.config));            
+                    console.log("charge:" + response.data.charge);
+                    console.log("reqeust:" + response.data.request);
+                    
+                    //$scope.error = response.data.error;
+                    //$scope.charge = response.data.charge;
+                    //$scope.request = response.data.request;
+                    callback(result);
+                });
+            });
+            */
+        }
+    return {
+      commit: commit
+  };
+}
 },{"http-status":1}]},{},[5])

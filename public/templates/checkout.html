@@ -1,11 +1,32 @@
 <form role="form" class="inline">
+         <h1><i class="fa fa-user"></i>Customer</h1>
+    <div class="confirm cart-customer">
+        <div class="customer name form-group"><div class="label">Name: </div><input class="address" type="text" ng-model="customer.name"></div>
+        <div class="customer address line1 form-group"><div class="label">Address Line 1: </div><input class="address"  type="text" ng-model="customer.address_line1"></div>
+        <div class="customer address line2 form-group"><div class="label">Address Line 2: </div><input class="address"  type="text" ng-model="customer.address_line2"></div>
+        <div class="customer address city form-group"><div class="label">City: </div><input class="address"  type="text" ng-model="customer.address_city"></div>
+        <div class="customer address state form-group"><div class="label">State: </div><input class="address" type="text" ng-model="customer.address_state"></div>
+        <div class="customer address zip form-group"><div class="label">Postal Code: </div><input class="address" type="text" ng-model="customer.address_zip"></div>
+        <div class="customer address country form-group"><div class="label">Country: </div><input class="address" type="text" ng-model="customer.address_country"></div>   
+    </div>
+        <h1><i class="fa fa-shopping-cart "></i>Cart</h1>
+    <div class="">
+        <div class="quantity form-group"><div class="label">Donation:</div>
+        <div class="select-container">
+            <select 
+                ng-options="option.name for option in donations.donationOptions"
+      ng-model="donations.selectedOption"></select></div>
+        
+        </div>
+    </div>
+    </div>
     <div class="checkout">
         <h1><i class="fa fa-credit-card"></i>Payment</h1>
 
-        <div class="col-md-4">
+        <div class="">
             <div class="credit-card-input form-group">
                 <div class="label">Credit Card Number:</div>
-                <input type="text" ng-model="stripeToken.number" />
+                <input type="text" ng-model="card.data.number" />
             </div>
             <div class="credit-card-expires form-group">
                 <div class="label">Credit Card Exp.:</div>
@@ -16,14 +37,12 @@
             </div>
             <div class="credit-card-cvc form-group">
                 <div class="label">CVC:</div>
-                <input type="text" ng-model="stripeToken.cvc" />
+                <input type="text" ng-model="card.data.cvc" />
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="">
             <div class="form-group">
-                <button class="btn btn-default " ng-click="checkout()">
-                    Check Out
-                </button>
+                <a role="button" class="btn btn-default" ng-click="checkout()">Pay</a>
                 <div class="error checkout-error msg" ng-show="error">
                     {{error}}
                 </div>
@@ -34,10 +53,11 @@
                     Request: {{request}}
                 </div>
                 <div class="checkout-success" ng-show="checkedOut">
-                    Checked out successfully!
+                    Paid successfully!
                 </div>
                 <div>{{checkout.response}}</div>
             </div>
         </div>
     </div>
 </div>
+<div ng-show="1">{{stripe_token}}</div>
