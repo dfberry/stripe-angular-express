@@ -1,5 +1,10 @@
 <html ng-app="stripe-app">
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/stripe-app.css" />
+
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script type="text/javascript"
       src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js">
@@ -7,15 +12,18 @@
     <script type="text/javascript"
       src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js">
     </script>
+    
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    
     <script type="text/javascript" src="/public/bin/index.js"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <link ref="stylesheet" type="test/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/stripe-app.css" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+
   </head>
-  <body>
-<checkout></checkout>
+  <body >
+    <div class="container">
+        <confirm class="row"></confirm>
+        <checkout class="row"></checkout>
+    </div>
 
   </body>
 </html>

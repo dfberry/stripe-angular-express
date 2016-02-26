@@ -1638,77 +1638,91 @@ module.exports = {
 }.call(this));
 
 },{}],3:[function(require,module,exports){
+exports.ConfirmController = function($scope, $cart, $customer, $http) {
+
+    Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
+
+    $scope.donations = {
+        donationOptions: [
+            {id: '1000', name: '$10'},
+            {id: '5000', name: '$50'},
+            {id: '60000', name: '$600'}
+        ]
+    };
+    $scope.donations.selectedOption = $scope.donations.donationOptions[0];
+    
+    $scope.months = {
+        monthOptions: [
+            {id: '01', name: '1'},
+            {id: '02', name: '2'},
+            {id: '03', name: '3'},
+            {id: '04', name: '4'},
+            {id: '05', name: '5'},
+            {id: '06', name: '6'},
+            {id: '07', name: '7'},
+            {id: '08', name: '8'},
+            {id: '09', name: '9'},
+            {id: '10', name: '10'},
+            {id: '11', name: '11'},
+            {id: '12', name: '12'}
+        ]};
+        
+    $scope.months.selectedOption = $scope.months.monthOptions[11];
+        
+    $scope.years = {
+        yearOptions: [
+            {id:'2016', name: '2016'},
+            {id:'2017', name: '2017'},
+            {id:'2018', name: '2018'}
+        ]};
+    $scope.years.selectedOption =  $scope.years.yearOptions[2];
+
+    //console.log($scope.years);
+    //console.log($scope.months);
+ 
+    $scope.init = function(){
+        $scope.cart = $cart;
+        $scope.customer = $customer;
+   }
+    
+    $scope.update = function() {
+        $scope.cart.calcTotalPrice();
+    }
+
+    $scope.confirm = function() {
+       $scope.error = null;
+       
+       $scope.stripeToken.name = $customer.name
+       console.log($scope.stripeToken);
+       /*
+       Stripe.card.createToken($scope.stripeToken, function(status, response) {
+            if (status.error) {
+                console.log("stripe token not created");
+                $scope.error = status.error;
+                return;
+            } else {
+                $scope.stripe_token = response.id;
+                console.log("stripe token created = " + response.id);
+            }
+        });
+        */
+    }
+    
+    $scope.init();
+};
+
 
 exports.CheckoutController = function($scope, $cart, $http) {
 
-  // For checkout
-  Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
-
-  $scope.cart = $cart;
-
-  $scope.stripeToken = {
-    number: '4242424242424242',
-    cvc: '123',
-    exp_month: '12',
-    exp_year: '2016'
-  };
-
-    console.log(JSON.stringify($scope.stripeToken));
-    console.log(JSON.stringify($scope.cart)); 
-
-  $scope.checkout = function() {
-    
-    $scope.error = null;
-
-
-
-    Stripe.card.createToken($scope.stripeToken, function(status, response) {
-        
-        
-      if (status.error) {
-        console.log("stripe token not created");
-        $scope.error = status.error;
-        return;
-      } else {
-          console.log("stripe token created = " + response.id);
-      }
-
-      $http.
-        post('/api/v1/checkout', { stripeToken: response.id, cart: $scope.cart }).
-        then(function(data) {
-          console.log("success returned from api call: " + JSON.stringify(data));
-          
-          $scope.checkout.response = data;
-          
-          if (data.status=="succeeded"){
-            $scope.checkedOut = true;
-          } else {
-             $scope.checkedOut = false; 
-          }
-          
-        },
-        function(response){
-            
-            console.log(JSON.stringify(response));
-            
-            console.log("failure from checkout in controllers.js --");
-            console.log("response.status=" + response.status);            
-            console.log("response.data=" + JSON.stringify(response.data));            
-            console.log("response.header=" + response.header);            
-            console.log("response.config=" + JSON.stringify(response.config));            
-            console.log("charge:" + response.data.charge);
-            console.log("reqeust:" + response.data.request);
-            
-            $scope.error = response.data.error;
-            $scope.charge = response.data.charge;
-            $scope.request = response.data.request;
-        });
-    });
-    
-  };
 };
 
 },{}],4:[function(require,module,exports){
+exports.confirm = function() {
+  return {
+    controller: 'ConfirmController',
+    templateUrl: '/public/templates/confirm.html'
+  };
+};
 exports.checkout = function() {
   return {
     controller: 'CheckoutController',
@@ -1743,13 +1757,43 @@ var app = angular.module('stripe-app', ['stripe-app.components', 'ngRoute']);
 var status = require('http-status');
 
 exports.$cart = function($http) {
+
+  var calcTotalPrice = function(){
+      console.log("calcTotalPrice=" + data.totalprice);
+      data.totalprice = data.quantity * data.price;
+      console.log("calcTotalPrice=" + data.totalprice);
+  } 
+
   var data = {
       name: "Donation",
       quantity: 1,
       price: 1000,
-      totalprice: 1000
+      totalprice: 0
   };
 
-  return data;
+  calcTotalPrice();
+
+  return {
+      data: data,
+      calcTotalPrice: calcTotalPrice
+  };
 };
+
+exports.$customer = function($http){
+    
+    var data = {
+        name: "Dina Berry",
+        address_line1: "1515 State Street",
+        address_line2: "5th Floor",
+        address_city: "Seattle",
+        address_state: "WA",
+        address_zip: "98220",
+        address_country: "USA"
+    };
+    
+    return data;
+    
+}
+
+
 },{"http-status":1}]},{},[5])
