@@ -1,6 +1,7 @@
 <form role="form" class="inline">
          <h1><i class="fa fa-user"></i>Customer</h1>
-    <div class="confirm cart-customer">
+        <div class="customer email form-group"><div class="label">Receipt Email: </div><input class="email" type="text" ng-model="customer.email"></div>
+        
         <div class="customer name form-group"><div class="label">Name: </div><input class="address" type="text" ng-model="customer.name"></div>
         <div class="customer address line1 form-group"><div class="label">Address Line 1: </div><input class="address"  type="text" ng-model="customer.address_line1"></div>
         <div class="customer address line2 form-group"><div class="label">Address Line 2: </div><input class="address"  type="text" ng-model="customer.address_line2"></div>
@@ -14,8 +15,8 @@
         <div class="quantity form-group"><div class="label">Donation:</div>
         <div class="select-container">
             <select 
-                ng-options="option.name for option in donations.donationOptions"
-      ng-model="donations.selectedOption"></select></div>
+                ng-options="option.name for option in donations"
+      ng-model="donations_default"></select></div>
         
         </div>
     </div>
