@@ -71,7 +71,18 @@ var shipment = {
             receipt_email: 'dinaberry@outlook.com',
             statement_descriptor: 'Stripe Credit Store',
             shipping: {
-                //name: "Billy Bob"
+                
+                "address": {
+                "city": "Anytown",
+                "country": "US",
+                "line1": "1234 Main street",
+                "line2": "box 10",
+                "postal_code": "123456",
+                "state": "CA"
+                },
+                "name": "Jenny Rosen",
+                "phone": "360-220-5555"
+           
             }
         };
 
