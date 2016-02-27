@@ -56,6 +56,12 @@ exports.CheckoutController = function($scope, $cart, $card, $customer, $charge, 
        $scope.card.data.name = $customer.name
        $scope.card.data.exp_month = $scope.months.selectedOption.id;
        $scope.card.data.exp_year = $scope.years.selectedOption.id;
+       $scope.card.data.address_city="Bellingham";
+       $scope.card.data.address_line1="2511 Ellis St";
+       $scope.card.data.address_line2="box 10";
+       $scope.card.data.address_country="CA";
+       $scope.card.data.address_state="CO";
+       $scope.card.data.address_zip="98229";
        
        // update cart
        $scope.cart.data.price = $scope.donations.selectedOption.id;
@@ -68,13 +74,29 @@ exports.CheckoutController = function($scope, $cart, $card, $customer, $charge, 
        }
        
        //console.log("charge=" + JSON.stringify(charge));    
+
+       console.log("about to call commit");
     
-       $charge.commit(charge, function(results){
-           console.log("results=" + JSON.stringify(results));  
+       $charge.commit(charge, function(error, results){
+
+           console.log("checkout function - commit returned");
+
+           console.log("controllers - error: " + JSON.stringify(error));
+           console.log("controllers - results: " + JSON.stringify(results));
+
+           if (error){
+               $scope.error = error;
+               $scope.checkedOut=false;
+           } else {
+               $scope.checkedOut=true;
+               $scope.error = false;
+           }
+           
+           $scope.charge = results.data.charge;
+           $scope.request = results.data.request;
+           
            return;  
        });
- 
-       return;
     }
     
     $scope.buttonTest = function(){
@@ -82,57 +104,8 @@ exports.CheckoutController = function($scope, $cart, $card, $customer, $charge, 
         return;
     }
     
-  $scope.checkout2 = function() {
-    
-    $scope.error = null;
-    
-    $scope.hardcart = {
-      name: "Donation",
-      quantity: 1,
-      price: 1000,
-      totalprice: 1000
-  };
-
-    $scope.stripeToken = {
-        number: '4242424242424242',
-        cvc: '123',
-        exp_month: '12',
-        exp_year: '2016'
-    };
-    Stripe.setPublishableKey('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
-    Stripe.card.createToken($scope.stripeToken, function(status, response) {
-        
-        
-      if (status.error) {
-        console.log("stripe token not created");
-        $scope.error = status.error;
-        return;
-      } else {
-          console.log("stripe token created = " + response.id);
-      }
-
-      $http.
-        post('/api/v1/checkout', { stripeToken: response.id, cart: $scope.hardcart }).
-        then(function(data) {
-          console.log("success returned from api call: " + data);
-          $scope.checkedOut = true;
-          
-        },
-        function(response){
-            console.log("failure from checkout in controllers.js --");
-            console.log("response.status=" + response.status);            
-            console.log("response.data=" + JSON.stringify(response.data));            
-            console.log("response.header=" + response.header);            
-            console.log("response.config=" + JSON.stringify(response.config));            
-            console.log("charge:" + response.data.charge);
-            console.log("reqeust:" + response.data.request);
-            
-            $scope.error = response.data.error;
-            $scope.charge = response.data.charge;
-            $scope.request = response.data.request;
-        });
-    });   
-  } 
+ 
+  
     
     $scope.init();
 };

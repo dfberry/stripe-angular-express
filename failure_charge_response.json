@@ -1,0 +1,18 @@
+{  
+   "type":"StripeCardError",
+   "stack":"Error: Your card was declined.\n    at Error._Error (/Users/dfberry/repos/stripe-express-angular/node_modules/stripe/lib/Error.js:12:17)\n    at Error.Constructor (/Users/dfberry/repos/stripe-express-angular/node_modules/stripe/lib/utils.js:105:13)\n    at Error.Constructor (/Users/dfberry/repos/stripe-express-angular/node_modules/stripe/lib/utils.js:105:13)\n    at Function.StripeError.generate (/Users/dfberry/repos/stripe-express-angular/node_modules/stripe/lib/Error.js:54:14)\n    at IncomingMessage.<anonymous> (/Users/dfberry/repos/stripe-express-angular/node_modules/stripe/lib/StripeResource.js:138:39)\n    at emitNone (events.js:72:20)\n    at IncomingMessage.emit (events.js:166:7)\n    at endReadableNT (_stream_readable.js:905:12)\n    at nextTickCallbackWith2Args (node.js:455:9)\n    at process._tickCallback (node.js:369:17)",
+   "rawType":"card_error",
+   "code":"card_declined",
+   "message":"Your card was declined.",
+   "raw":{  
+      "message":"Your card was declined.",
+      "type":"card_error",
+      "code":"card_declined",
+      "charge":"ch_17iu72JklCPSOV9aL5aSdiOf",
+      "statusCode":402,
+      "requestId":"req_7yrqrQuuCMg9Fc"
+   },
+   "requestId":"req_7yrqrQuuCMg9Fc",
+   "statusCode":402
+}
+
