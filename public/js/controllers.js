@@ -1,4 +1,4 @@
-exports.CheckoutController = function($scope, $myappmodel, $myappconst, $http) {
+exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
     $scope.init = function(){
         
@@ -16,9 +16,7 @@ exports.CheckoutController = function($scope, $myappmodel, $myappconst, $http) {
 
         $scope.donations = $myappconst.donations.list;
         $scope.donations.selectedOption = $myappconst.donations_default;
-
-        console.log("init done");
-
+        
    }
 
     $scope.checkout = function() {
@@ -26,21 +24,26 @@ exports.CheckoutController = function($scope, $myappmodel, $myappconst, $http) {
        $scope.error = null;
        
        // update card from ddl
-       $scope.card.data.exp_month = $scope.months.selectedOption.id;
-       $scope.card.data.exp_year = $scope.years.selectedOption.id;
-       
-       // update cart from ddl
+       $scope.card.exp_month = $scope.months.selectedOption.id;
+       $scope.card.exp_year = $scope.years.selectedOption.id;
+              
+       // update cart from ddl & constants, calc total
+       $scope.cart.name = $myappconfig.donationDescription;
        $scope.cart.price = $scope.donations.selectedOption.id;
+       $scope.cart.quantity = 1;
        $scope.cart.totalprice = $scope.cart.price * $scope.cart.quantity;
+
+       console.log($scope.cart);
        
-       var charge = {
+       var completeCharge = {
            "customer": $scope.customer,
            "card": $scope.card,
            "cart": $scope.cart
       }
-      
     
-       $charge.commit(charge, function(error, results){
+      console.log(completeCharge);
+    
+       $myservice.commit(completeCharge, function(error, results){
            
            if (error){
                $scope.error = error;

@@ -66,7 +66,7 @@ var shipment = {
             amount: req.body.cart.totalprice,
             currency: 'usd',
             source: req.body.stripeToken,
-            description: req.body.cart.name,
+            description: req.body.card.name,
             metadata: {'cart': 'test of metadata'},
             receipt_email: 'dinaberry@outlook.com',
             statement_descriptor: 'Stripe Credit Store',
