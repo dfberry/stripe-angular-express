@@ -13,45 +13,33 @@ module.exports = function(wagner) {
   /* Stripe Checkout API */
   api.post('/checkout', wagner.invoke(function(Stripe) {
             
-    console.log("checkout api called \n");        
-            
     return function(req, res) {
-
-        console.log("checkout api function called \n");
-
-        console.log(JSON.stringify(req.body));  
 
         // https://stripe.com/docs/api#capture_charge
         // shipping name is in the metadata so that it is easiy found on stripe's website 
+        // statement_descriptor & description will show on credit card bill
+        // receipt_email is sent but stripe isn't sending receipt - you still have to do that
+        // shipping is sent only so you can pull information from stripe 
+        // metadata: 20 keys, with key names up to 40 characters long and values up to 500 characters long
         var stripeCharge = {
             amount: req.body.cart.totalprice,
             currency: 'usd',
             source: req.body.stripeToken,
             description: req.body.cart.name,
-            metadata: {'ShipTo': req.body.customer.shipping.name},
+            metadata: {'ShipTo': req.body.customer.shipping.name, 'BillTo': req.body.customer.billing.name},
             receipt_email: req.body.customer.email,
             statement_descriptor: config.Characters22_StoreName,
             shipping: req.body.customer.shipping 
         };
 
-        // And create a charge in Stripe corresponding to the price
+        // Charge the card NOW
         Stripe.charges.create(stripeCharge,function(err, charge) {
-                
-            console.log("err = " + JSON.stringify(err) + "\n\n");
-            console.log("charge=" + JSON.stringify(charge)+ "\n\n");  
-                
             if (err) {
-                console.log("Error for requestId: " + err.requestId);
-                
                 return res.
                 status(status.INTERNAL_SERVER_ERROR).
                 json({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
-            
-            console.log("Success for chargeId: "  + charge.id);
-            
             return res.json(charge);
-        
         }); 
 
      };
