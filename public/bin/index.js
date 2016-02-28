@@ -1644,6 +1644,16 @@ exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappco
        $scope.cart.price = $scope.donations.selectedOption.id;
        $scope.cart.quantity = 1;
        $scope.cart.totalprice = $scope.cart.price * $scope.cart.quantity;
+       
+       // create billing address
+       $scope.customer.billing.name = $scope.card.name;
+       $scope.customer.billing.address.line1 = $scope.card.address_line1;
+       $scope.customer.billing.address.line2 = $scope.card.address_line2;
+       $scope.customer.billing.address.city = $scope.card.address_city;
+       $scope.customer.billing.address.state = $scope.card.address_state;
+       $scope.customer.billing.address.postal_code = $scope.card.address_zip;
+       $scope.customer.billing.address.country = $scope.card.address_country;
+       
 
        console.log($scope.cart);
        
@@ -1766,7 +1776,19 @@ exports.$myappmodel = function() {
             },
             name: '',
             phone: ''
-        }  
+        },
+        billing: {
+            address: {
+                city: '',
+                country: 'USA',
+                line1: '',
+                line2: '',
+                postal_code: '',
+                state: ''
+            },
+            name: '',
+            phone: ''
+        }   
     };
     
 

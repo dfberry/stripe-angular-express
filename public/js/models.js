@@ -40,7 +40,19 @@ exports.$myappmodel = function() {
             },
             name: '',
             phone: ''
-        }  
+        },
+        billing: {
+            address: {
+                city: '',
+                country: 'USA',
+                line1: '',
+                line2: '',
+                postal_code: '',
+                state: ''
+            },
+            name: '',
+            phone: ''
+        }   
     };
     
 
