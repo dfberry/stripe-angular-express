@@ -20,7 +20,7 @@ exports.$myappmodel = function() {
         address_city: '',
         address_line1: '',
         address_line2: '',
-        address_country:'',
+        address_country:'USA',
         address_state:'',
         address_zip:''
     };
@@ -32,7 +32,7 @@ exports.$myappmodel = function() {
         shipping: {
             address: {
                 city: '',
-                country: '',
+                country: 'USA',
                 line1: '',
                 line2: '',
                 postal_code: '',

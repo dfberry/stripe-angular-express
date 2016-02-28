@@ -1562,7 +1562,7 @@ exports.$myappconst = function(){
             {id:'2018', name: '2018'}
         ];
 
-   var years_default = years[2];
+   var years_default = years[0];
     
    var months = [
             {id: '01', name: '1'},
@@ -1578,14 +1578,17 @@ exports.$myappconst = function(){
             {id: '11', name: '11'},
             {id: '12', name: '12'}
         ];
-    var months_default = months[11];    
+    var months_default = months[10];    
     
-    var donations = [
+    var donations = { 
+        list: [
             {id: '1000', name: '$10'},
             {id: '5000', name: '$50'},
-            {id: '60000', name: '$600'}
-        ];
-    var donations_default = donations[0];
+            {id: '10000', name: '$100'}
+        ]
+    };
+    var donations_default = donations.list[0];
+    
       
     var cart_default = {
         name: "Donation",
@@ -1620,8 +1623,12 @@ exports.CheckoutController = function($scope, $myappmodel, $myappconst, $http) {
         $scope.months = $myappconst.months;
         $scope.months.selectedOption = $myappconst.months_default;
 
-        $scope.donations = $myappconst.donations;
+        $scope.donations = $myappconst.donations.list;
         $scope.donations.selectedOption = $myappconst.donations_default;
+
+        console.log($myappconst.donations_default);
+        console.log($scope.donations.selectedOption);
+        console.log($scope.months.selectedOption);
 
         console.log("init done");
 
@@ -1737,7 +1744,7 @@ exports.$myappmodel = function() {
         address_city: '',
         address_line1: '',
         address_line2: '',
-        address_country:'',
+        address_country:'USA',
         address_state:'',
         address_zip:''
     };
@@ -1749,7 +1756,7 @@ exports.$myappmodel = function() {
         shipping: {
             address: {
                 city: '',
-                country: '',
+                country: 'USA',
                 line1: '',
                 line2: '',
                 postal_code: '',

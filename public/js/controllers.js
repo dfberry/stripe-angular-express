@@ -14,7 +14,7 @@ exports.CheckoutController = function($scope, $myappmodel, $myappconst, $http) {
         $scope.months = $myappconst.months;
         $scope.months.selectedOption = $myappconst.months_default;
 
-        $scope.donations = $myappconst.donations;
+        $scope.donations = $myappconst.donations.list;
         $scope.donations.selectedOption = $myappconst.donations_default;
 
         console.log("init done");
