@@ -32,8 +32,14 @@ module.exports = function(wagner) {
             shipping: req.body.customer.shipping 
         };
 
+        console.log("server stripe charge request object = " + JSON.stringify(stripeCharge)+ "\n");
+
         // Charge the card NOW
         Stripe.charges.create(stripeCharge,function(err, charge) {
+            
+            console.log("server stripe charge response.err = " + JSON.stringify(err) + "\n");      
+            console.log("server stripe charge response.charge = " + JSON.stringify(charge) + "\n"); 
+                    
             if (err) {
                 return res.
                 status(status.INTERNAL_SERVER_ERROR).

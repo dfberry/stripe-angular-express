@@ -16,13 +16,13 @@ exports.$myappmodel = function() {
         cvc: '123',
         exp_month: '',
         exp_year: '',
-        name: '',
-        address_city: '',
-        address_line1: '',
-        address_line2: '',
+        name: 'Barbara Jones',
+        address_city: 'Seattle',
+        address_line1: '5678 Nine Street',
+        address_line2: 'Box 3',
         address_country:'USA',
-        address_state:'',
-        address_zip:''
+        address_state:'WA',
+        address_zip:'98105'
     };
 
     // pass to server & then stripe
@@ -31,28 +31,29 @@ exports.$myappmodel = function() {
         // shipping object
         shipping: {
             address: {
-                city: '',
+                city: 'Seattle',
                 country: 'USA',
-                line1: '',
-                line2: '',
-                postal_code: '',
-                state: ''
+                line1: '1234 Five Lane',
+                line2: 'Floor 2',
+                postal_code: '98101',
+                state: 'WA'
             },
-            name: '',
+            name: 'Bob Smith',
             phone: ''
         },
         billing: {
             address: {
-                city: '',
+                city: 'Seattle',
                 country: 'USA',
-                line1: '',
-                line2: '',
-                postal_code: '',
-                state: ''
+                line1: '5678 Nine Street',
+                line2: 'Box 3',
+                postal_code: '98105',
+                state: 'WA'
             },
-            name: '',
-            phone: ''
-        }   
+            name: 'Barbara Jones',
+            phone: '206-555-1212'
+        },
+        email: 'bob@company.com'   
     };
     
 

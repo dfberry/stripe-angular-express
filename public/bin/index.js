@@ -1752,13 +1752,13 @@ exports.$myappmodel = function() {
         cvc: '123',
         exp_month: '',
         exp_year: '',
-        name: '',
-        address_city: '',
-        address_line1: '',
-        address_line2: '',
+        name: 'Barbara Jones',
+        address_city: 'Seattle',
+        address_line1: '5678 Nine Street',
+        address_line2: 'Box 3',
         address_country:'USA',
-        address_state:'',
-        address_zip:''
+        address_state:'WA',
+        address_zip:'98105'
     };
 
     // pass to server & then stripe
@@ -1767,28 +1767,29 @@ exports.$myappmodel = function() {
         // shipping object
         shipping: {
             address: {
-                city: '',
+                city: 'Seattle',
                 country: 'USA',
-                line1: '',
-                line2: '',
-                postal_code: '',
-                state: ''
+                line1: '1234 Five Lane',
+                line2: 'Floor 2',
+                postal_code: '98101',
+                state: 'WA'
             },
-            name: '',
+            name: 'Bob Smith',
             phone: ''
         },
         billing: {
             address: {
-                city: '',
+                city: 'Seattle',
                 country: 'USA',
-                line1: '',
-                line2: '',
-                postal_code: '',
-                state: ''
+                line1: '5678 Nine Street',
+                line2: 'Box 3',
+                postal_code: '98105',
+                state: 'WA'
             },
-            name: '',
-            phone: ''
-        }   
+            name: 'Barbara Jones',
+            phone: '206-555-1212'
+        },
+        email: 'bob@company.com'   
     };
     
 
@@ -1808,9 +1809,15 @@ exports.$myservice = function($http,$myappconfig){
         // my stripe test key
         Stripe.setPublishableKey($myappconfig.stripePublishableKey);
               
+        console.log("client stripe token request = " + JSON.stringify(completeCharge.card)+ "\n");      
+              
         // credit card info passed 
         // billing address passed as part of charge.card
         Stripe.card.createToken(completeCharge.card, function(status, response) {
+
+        console.log("client stripe token response.status = " + JSON.stringify(status)+ "\n");      
+        console.log("client stripe token response.response = " + JSON.stringify(response)+ "\n");      
+
                         
             if (status.error) {
                 console.log("stripe token not created");
@@ -1818,18 +1825,26 @@ exports.$myservice = function($http,$myappconfig){
                 callback(result);
             } 
 
+            var chargeRequestObject = { 
+                    stripeToken: response.id, 
+                    cart: completeCharge.cart , 
+                    customer: completeCharge.customer
+            };
+            
+            console.log("client charge request object = " + JSON.stringify(chargeRequestObject)+ "\n"); 
+
             // token (not credit card) passed
             // shipping address passed in charge.customer
             $http.
-                post('/api/v1/checkout', { stripeToken: response.id, cart: completeCharge.cart , customer: completeCharge.customer}).
+                post('/api/v1/checkout', chargeRequestObject).
                 then(function(data) { //success
                     console.log("success returned from api call");
-                    console.log("services:data: " + JSON.stringify(data));
+                    console.log("client charge response success data: " + JSON.stringify(data)+ "\n");
                     callback(null, data);
                 },
                 function(response){ //failure
                     console.log("failure returned from api call");
-                    console.log("services:response - " +  JSON.stringify(response));
+                    console.log("client charge response failure data: " + JSON.stringify(response)+ "\n");
                     callback(response.data.error, response);
                 });
             });

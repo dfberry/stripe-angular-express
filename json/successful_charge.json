@@ -1,0 +1,342 @@
+client stripe token request = 
+{  
+   "number":"4242424242424242",
+   "cvc":"123",
+   "exp_month":"11",
+   "exp_year":"2016",
+   "name":"Barbara Jones",
+   "address_city":"Seattle",
+   "address_line1":"5678 Nine Street",
+   "address_line2":"Box 3",
+   "address_country":"USA",
+   "address_state":"WA",
+   "address_zip":"98105"
+}
+
+client stripe token response.status = 200
+
+client stripe token response.response = {  
+   "id":"tok_17jylQJklCPSOV9aLkiy5879",
+   "object":"token",
+   "card":{  
+      "id":"card_17jylQJklCPSOV9ahtXhPVB8",
+      "object":"card",
+      "address_city":"Seattle",
+      "address_country":"USA",
+      "address_line1":"5678 Nine Street",
+      "address_line1_check":"unchecked",
+      "address_line2":"Box 3",
+      "address_state":"WA",
+      "address_zip":"98105",
+      "address_zip_check":"unchecked",
+      "brand":"Visa",
+      "country":"US",
+      "cvc_check":"unchecked",
+      "dynamic_last4":null,
+      "exp_month":11,
+      "exp_year":2016,
+      "funding":"credit",
+      "last4":"4242",
+      "metadata":{  
+
+      },
+      "name":"Barbara Jones",
+      "tokenization_method":null
+   },
+   "client_ip":"73.11.136.147",
+   "created":1456782072,
+   "livemode":false,
+   "type":"card",
+   "used":false
+}
+
+client charge request object = {  
+   "stripeToken":"tok_17jylQJklCPSOV9aLkiy5879",
+   "cart":{  
+      "name":"Donation for XYZ",
+      "quantity":1,
+      "price":"1000",
+      "totalprice":1000
+   },
+   "customer":{  
+      "shipping":{  
+         "address":{  
+            "city":"Seattle",
+            "country":"USA",
+            "line1":"1234 Five Lane",
+            "line2":"Floor 2",
+            "postal_code":"98101",
+            "state":"WA"
+         },
+         "name":"Bob Smith",
+         "phone":""
+      },
+      "billing":{  
+         "address":{  
+            "city":"Seattle",
+            "country":"USA",
+            "line1":"5678 Nine Street",
+            "line2":"Box 3",
+            "postal_code":"98105",
+            "state":"WA"
+         },
+         "name":"Barbara Jones",
+         "phone":"206-555-1212"
+      },
+      "email":"bob@company.com"
+   }
+}
+
+server stripe charge request object = {  
+   "amount":1000,
+   "currency":"usd",
+   "source":"tok_17jylQJklCPSOV9aLkiy5879",
+   "description":"Donation for XYZ",
+   "metadata":{  
+      "ShipTo":"Bob Smith",
+      "BillTo":"Barbara Jones"
+   },
+   "receipt_email":"bob@company.com",
+   "statement_descriptor":"MyStripeStore",
+   "shipping":{  
+      "address":{  
+         "city":"Seattle",
+         "country":"USA",
+         "line1":"1234 Five Lane",
+         "line2":"Floor 2",
+         "postal_code":"98101",
+         "state":"WA"
+      },
+      "name":"Bob Smith",
+      "phone":""
+   }
+}
+
+server stripe charge response.err = null
+
+server stripe charge response.charge = {  
+   "id":"ch_17jylQJklCPSOV9aHyof0XV8",
+   "object":"charge",
+   "amount":1000,
+   "amount_refunded":0,
+   "application_fee":null,
+   "balance_transaction":"txn_17jylQJklCPSOV9afi1bpfz5",
+   "captured":true,
+   "created":1456782072,
+   "currency":"usd",
+   "customer":null,
+   "description":"Donation for XYZ",
+   "destination":null,
+   "dispute":null,
+   "failure_code":null,
+   "failure_message":null,
+   "fraud_details":{  
+
+   },
+   "invoice":null,
+   "livemode":false,
+   "metadata":{  
+      "ShipTo":"Bob Smith",
+      "BillTo":"Barbara Jones"
+   },
+   "order":null,
+   "paid":true,
+   "receipt_email":"bob@company.com",
+   "receipt_number":null,
+   "refunded":false,
+   "refunds":{  
+      "object":"list",
+      "data":[  
+
+      ],
+      "has_more":false,
+      "total_count":0,
+      "url":"/v1/charges/ch_17jylQJklCPSOV9aHyof0XV8/refunds"
+   },
+   "shipping":{  
+      "address":{  
+         "city":"Seattle",
+         "country":"USA",
+         "line1":"1234 Five Lane",
+         "line2":"Floor 2",
+         "postal_code":"98101",
+         "state":"WA"
+      },
+      "carrier":null,
+      "name":"Bob Smith",
+      "phone":"",
+      "tracking_number":null
+   },
+   "source":{  
+      "id":"card_17jylQJklCPSOV9ahtXhPVB8",
+      "object":"card",
+      "address_city":"Seattle",
+      "address_country":"USA",
+      "address_line1":"5678 Nine Street",
+      "address_line1_check":"pass",
+      "address_line2":"Box 3",
+      "address_state":"WA",
+      "address_zip":"98105",
+      "address_zip_check":"pass",
+      "brand":"Visa",
+      "country":"US",
+      "customer":null,
+      "cvc_check":"pass",
+      "dynamic_last4":null,
+      "exp_month":11,
+      "exp_year":2016,
+      "fingerprint":"uOlT1SgxEykd9grd",
+      "funding":"credit",
+      "last4":"4242",
+      "metadata":{  
+
+      },
+      "name":"Barbara Jones",
+      "tokenization_method":null
+   },
+   "source_transfer":null,
+   "statement_descriptor":"MyStripeStore",
+   "status":"succeeded"
+}
+
+
+
+client charge response success data: {  
+   "data":{  
+      "id":"ch_17jylQJklCPSOV9aHyof0XV8",
+      "object":"charge",
+      "amount":1000,
+      "amount_refunded":0,
+      "application_fee":null,
+      "balance_transaction":"txn_17jylQJklCPSOV9afi1bpfz5",
+      "captured":true,
+      "created":1456782072,
+      "currency":"usd",
+      "customer":null,
+      "description":"Donation for XYZ",
+      "destination":null,
+      "dispute":null,
+      "failure_code":null,
+      "failure_message":null,
+      "fraud_details":{  
+
+      },
+      "invoice":null,
+      "livemode":false,
+      "metadata":{  
+         "ShipTo":"Bob Smith",
+         "BillTo":"Barbara Jones"
+      },
+      "order":null,
+      "paid":true,
+      "receipt_email":"bob@company.com",
+      "receipt_number":null,
+      "refunded":false,
+      "refunds":{  
+         "object":"list",
+         "data":[  
+
+         ],
+         "has_more":false,
+         "total_count":0,
+         "url":"/v1/charges/ch_17jylQJklCPSOV9aHyof0XV8/refunds"
+      },
+      "shipping":{  
+         "address":{  
+            "city":"Seattle",
+            "country":"USA",
+            "line1":"1234 Five Lane",
+            "line2":"Floor 2",
+            "postal_code":"98101",
+            "state":"WA"
+         },
+         "carrier":null,
+         "name":"Bob Smith",
+         "phone":"",
+         "tracking_number":null
+      },
+      "source":{  
+         "id":"card_17jylQJklCPSOV9ahtXhPVB8",
+         "object":"card",
+         "address_city":"Seattle",
+         "address_country":"USA",
+         "address_line1":"5678 Nine Street",
+         "address_line1_check":"pass",
+         "address_line2":"Box 3",
+         "address_state":"WA",
+         "address_zip":"98105",
+         "address_zip_check":"pass",
+         "brand":"Visa",
+         "country":"US",
+         "customer":null,
+         "cvc_check":"pass",
+         "dynamic_last4":null,
+         "exp_month":11,
+         "exp_year":2016,
+         "fingerprint":"uOlT1SgxEykd9grd",
+         "funding":"credit",
+         "last4":"4242",
+         "metadata":{  
+
+         },
+         "name":"Barbara Jones",
+         "tokenization_method":null
+      },
+      "source_transfer":null,
+      "statement_descriptor":"MyStripeStore",
+      "status":"succeeded"
+   },
+   "status":200,
+   "config":{  
+      "method":"POST",
+      "transformRequest":[  
+         null
+      ],
+      "transformResponse":[  
+         null
+      ],
+      "url":"/api/v1/checkout",
+      "data":{  
+         "stripeToken":"tok_17jylQJklCPSOV9aLkiy5879",
+         "cart":{  
+            "name":"Donation for XYZ",
+            "quantity":1,
+            "price":"1000",
+            "totalprice":1000
+         },
+         "customer":{  
+            "shipping":{  
+               "address":{  
+                  "city":"Seattle",
+                  "country":"USA",
+                  "line1":"1234 Five Lane",
+                  "line2":"Floor 2",
+                  "postal_code":"98101",
+                  "state":"WA"
+               },
+               "name":"Bob Smith",
+               "phone":""
+            },
+            "billing":{  
+               "address":{  
+                  "city":"Seattle",
+                  "country":"USA",
+                  "line1":"5678 Nine Street",
+                  "line2":"Box 3",
+                  "postal_code":"98105",
+                  "state":"WA"
+               },
+               "name":"Barbara Jones",
+               "phone":"206-555-1212"
+            },
+            "email":"bob@company.com"
+         }
+      },
+      "headers":{  
+         "Accept":"application/json, text/plain, */*",
+         "Content-Type":"application/json;charset=utf-8"
+      }
+   },
+   "statusText":"OK"
+}
+
