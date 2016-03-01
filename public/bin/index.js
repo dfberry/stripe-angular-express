@@ -1612,6 +1612,10 @@ exports.$myappconst = function(){
 },{}],4:[function(require,module,exports){
 exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
+    $scope.add = function(){
+        return 2;
+    }
+
     $scope.init = function(){
         
         // scope models
@@ -1689,6 +1693,12 @@ exports.checkout = function() {
   return {
     controller: 'CheckoutController',
     templateUrl: '/public/templates/checkout.html'
+  };
+};
+exports.cart = function() {
+  return {
+    controller: 'CheckoutController',
+    templateUrl: '/public/templates/cart.html'
   };
 };
 },{}],6:[function(require,module,exports){

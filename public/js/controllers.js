@@ -1,5 +1,9 @@
 exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
+    $scope.add = function(){
+        return 2;
+    }
+
     $scope.init = function(){
         
         // scope models
