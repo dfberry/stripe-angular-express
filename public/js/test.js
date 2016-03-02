@@ -49,13 +49,24 @@ describe('TestController', function() {
   }));
 
   describe('$scope.test', function() {
+      
+    beforeEach(function() {
+      $scope = {};
+      controller = $controller('TestController', { $scope: $scope });
+    });
+      
     it('returns 2', function() {
-      var $scope = {};
-      var controller = $controller('TestController', { $scope: $scope });
       //console.log(controller);
       //console.log($scope);
       expect($scope.test()).toEqual(2);
       console.log($scope.test())
+    });
+    
+    it('returns 2', function() {
+      //console.log(controller);
+      //console.log($scope);
+      expect($scope.myvalue).toEqual("test value");
+      console.log($scope.myvalue)
     });
   });
 });
