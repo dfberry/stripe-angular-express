@@ -1619,12 +1619,10 @@ exports.TestController = function ($scope){
     $scope.test = function(){return 2;}
     $scope.myvalue = "test value";
 }
-
+exports.Test2Controller = function ($scope, $myappconfig){
+    $scope.test = $myappconfig.donationDescription
+}
 exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
-
-    $scope.add = function(){
-        return 2;
-    }
 
     $scope.init = function(){
         

@@ -1,41 +1,7 @@
- describe("$myappconfig", function (service) {
-    beforeEach(module('stripe-app.components'));
 
-    var service;
-    beforeEach(function () {
-        angular.mock.inject(function ($injector) {
-            service = $injector.get('$myappconfig');
-        })
-    });
 
-    it("should return a property stripePublishableKey", inject(function () {        
-        expect(service.stripePublishableKey).toBe('pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP');
-    }));
- 
-    it("should return a property donationDescription", inject(function () {        
-        expect(service.donationDescription).toBe('Donation for XYZ');
-    })); 
-});
 
-describe("$myappconst", function (service) {
-    beforeEach(module('stripe-app.components'));
-
-    var service;
-    beforeEach(function () {
-        angular.mock.inject(function ($injector) {
-            service = $injector.get('$myappconst');
-        })
-    });
-
-    it("months should return 12 items", inject(function () {        
-        expect(service.months.length).toBe(12);
-    }));
- 
-    it("months_default should return months[10]", inject(function () {        
-        expect(service.months_default).toBe(service.months[10]);
-    })); 
-});
-
+/*
 describe('TestController', function() {
     
   beforeEach(module('stripe-app.components'));
@@ -59,17 +25,58 @@ describe('TestController', function() {
       //console.log(controller);
       //console.log($scope);
       expect($scope.test()).toEqual(2);
-      console.log($scope.test())
     });
     
     it('returns 2', function() {
       //console.log(controller);
       //console.log($scope);
       expect($scope.myvalue).toEqual("test value");
-      console.log($scope.myvalue)
     });
   });
 });
+describe('Test2Controller', function() {
+    
+  beforeEach(module('stripe-app.components'));
+
+  var $controller;
+
+    var service;
+    beforeEach(function () {
+        angular.mock.inject(function ($injector) {
+            service = $injector.get('$myappconfig');
+            console.log(service);
+        })
+    });
+
+
+  beforeEach(inject(function(_$controller_){
+      
+    // The injector unwraps the underscores (_) from around the parameter names when matching
+    $controller = _$controller_;
+  }));
+
+  describe('$scope.test', function() {
+      
+    beforeEach(function() {
+      $scope = {};
+      controller = $controller('Test2Controller', { $scope: $scope, $myappconfig: service });
+      console.log($scope);
+    });
+      
+    it('from config object', function() {
+      //console.log(controller);
+      //console.log($scope);
+      console.log($scope.test);
+      //expect($scope.test.toEqual('Donation for XYZ'));
+      expect(1).toEqual(1);
+      console.log($scope.test);
+    });
+    
+  
+  });
+});
+*/
+
 /*
 describe("$myservice", function () {
   var serviceUnderTest;
