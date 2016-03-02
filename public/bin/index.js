@@ -1550,6 +1550,7 @@
 
 },{}],2:[function(require,module,exports){
 exports.$myappconfig = function() {
+    
     return {
         stripePublishableKey: 'pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP',
         donationDescription: 'Donation for XYZ'
@@ -1599,6 +1600,8 @@ exports.$myappconst = function(){
         quantity: 1 
     }
     
+    var test = function(){return 'const.js - test func'};
+    
     return {
         years : years,
         years_default :  years_default,
@@ -1606,10 +1609,17 @@ exports.$myappconst = function(){
         months_default : months_default,
         donations: donations,
         donations_default: donations_default,
-        cart_default: cart_default 
+        cart_default: cart_default,
+        test:test 
+        
     };  
 }
 },{}],4:[function(require,module,exports){
+exports.TestController = function ($scope){
+    $scope.test = function(){return 2;}
+    $scope.myvalue = "test value";
+}
+
 exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
     $scope.add = function(){
@@ -1812,6 +1822,8 @@ exports.$myappmodel = function() {
 },{}],8:[function(require,module,exports){
 exports.$myservice = function($http,$myappconfig){
     
+    var test = function(teststring){ return teststring;}
+    
     var commit = function (completeCharge, callback){
         
         var result = {};
@@ -1862,7 +1874,8 @@ exports.$myservice = function($http,$myappconfig){
         }
     
     return {
-      commit: commit
+      commit: commit,
+      test: test
     };    
     
 } 

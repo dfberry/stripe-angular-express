@@ -1,3 +1,8 @@
+exports.TestController = function ($scope){
+    $scope.test = function(){return 2;}
+    $scope.myvalue = "test value";
+}
+
 exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
     $scope.add = function(){

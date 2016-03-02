@@ -40,6 +40,8 @@ exports.$myappconst = function(){
         quantity: 1 
     }
     
+    var test = function(){return 'const.js - test func'};
+    
     return {
         years : years,
         years_default :  years_default,
@@ -47,6 +49,8 @@ exports.$myappconst = function(){
         months_default : months_default,
         donations: donations,
         donations_default: donations_default,
-        cart_default: cart_default 
+        cart_default: cart_default,
+        test:test 
+        
     };  
 }

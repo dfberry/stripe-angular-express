@@ -35,3 +35,53 @@ describe("$myappconst", function (service) {
         expect(service.months_default).toBe(service.months[10]);
     })); 
 });
+
+describe('TestController', function() {
+    
+  beforeEach(module('stripe-app.components'));
+
+  var $controller;
+
+  beforeEach(inject(function(_$controller_){
+      
+    // The injector unwraps the underscores (_) from around the parameter names when matching
+    $controller = _$controller_;
+  }));
+
+  describe('$scope.test', function() {
+    it('returns 2', function() {
+      var $scope = {};
+      var controller = $controller('TestController', { $scope: $scope });
+      //console.log(controller);
+      //console.log($scope);
+      expect($scope.test()).toEqual(2);
+      console.log($scope.test())
+    });
+  });
+});
+/*
+describe("$myservice", function () {
+  var serviceUnderTest;
+  var httpBackend;
+  var myappconfig;
+
+  beforeEach(module("stripe-app"));
+
+  beforeEach(inject(function ($myservice, $httpBackend, $myappconfig) {
+    serviceUnderTest = $myservice;
+    httpBackend = $httpBackend;
+    myappconfig = $myappconfig;
+  }));
+
+  it("test should just return string", function () {
+    
+    //httpBackend.whenPOST("/api/v1/checkout").respond({'error':'error'});
+    
+    serviceUnderTest.test('this is a test').then(function(response) {
+      expect(response).toEqual('this is a test');
+    });
+    //httpBackend.flush();
+  });
+
+});
+*/

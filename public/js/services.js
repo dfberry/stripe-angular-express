@@ -1,5 +1,7 @@
 exports.$myservice = function($http,$myappconfig){
     
+    var test = function(teststring){ return teststring;}
+    
     var commit = function (completeCharge, callback){
         
         var result = {};
@@ -50,7 +52,8 @@ exports.$myservice = function($http,$myappconfig){
         }
     
     return {
-      commit: commit
+      commit: commit,
+      test: test
     };    
     
 } 
