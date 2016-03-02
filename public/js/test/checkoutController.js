@@ -23,14 +23,7 @@ describe('Controller: CheckoutController', function() {
     // define the mocked service
     // http://stackoverflow.com/questions/15854043/mock-a-service-in-order-to-test-a-controller
     beforeEach(function() {
-        stripeChargeServiceMock = {
-            commit: function(completeCharge, callback) {
-                callback(null, { data : { 
-                        charge: "test_charge", 
-                        request : "test_request"
-                }});
-            }
-       };
+
    });    
 
     beforeEach(inject(function(_$controller_){
@@ -76,8 +69,18 @@ describe('Controller: CheckoutController', function() {
     describe('$scope.checkout', function() {
 
         beforeEach(function() {
+            
             $scope = {};
             
+            stripeChargeServiceMock = {
+                commit: function(completeCharge, callback) {
+                    callback(null, { data : { 
+                            charge: "test_charge", 
+                            request : "test_request"
+                    }});
+                }
+            }; 
+                      
             controller = $controller('CheckoutController', { 
                 $scope: $scope, 
                 $myappmodel: modelService,
@@ -86,9 +89,9 @@ describe('Controller: CheckoutController', function() {
                 $myservice: stripeChargeServiceMock,
                 $http: httpService
             });
-        });
+         });
 
-        it('checkout', function() {
+        it('FIX THIS - $scope.{returned values}', function() {
 
             modelService.cart = {
                 name: "unit test",
@@ -104,6 +107,8 @@ describe('Controller: CheckoutController', function() {
             expect($scope.request).toBe("test_request");
 
         });
+        it('FIX THIS - MORE TESTS FOR CHECKOUT', function() {
+        });        
     });
   
 });
