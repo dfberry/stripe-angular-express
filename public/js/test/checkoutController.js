@@ -108,6 +108,8 @@ describe('Controller: CheckoutController', function() {
 
         });
         it('FIX THIS - MORE TESTS FOR CHECKOUT', function() {
+            console.info("I've got a big log.");
+           
         });        
     });
   
