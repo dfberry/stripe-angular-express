@@ -15,7 +15,7 @@ gulp.task('watch', function() {
   gulp.watch([
       './public/js/*.js'
       ,'./public/js/test/*.js'], 
-      ['browserify']);
+      ['browserify', 'tdd']);
 });
 
 gulp.task('jasmine', () =>
@@ -37,4 +37,4 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
-gulp.task('default', ['browserify','watch','tdd']);
+gulp.task('default', ['watch']);

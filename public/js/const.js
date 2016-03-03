@@ -1,5 +1,10 @@
 exports.$myappconst = function(){
      
+  console.log("my test");   
+  console.log("test 2");
+  console.log('test 3');
+  console.log('test 4');
+     
    var years = [
             {id:'2016', name: '2016'},
             {id:'2017', name: '2017'},

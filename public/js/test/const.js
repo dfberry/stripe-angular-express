@@ -1,4 +1,4 @@
-describe("Service: $myappconst", function (service) {
+describe("Service: $myappconst", function () {
     
     // load the controller's module
     beforeEach(module('stripe-app.components'));

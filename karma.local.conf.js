@@ -2,7 +2,7 @@ module.exports = function(config) {
   config.set({
       
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,      
+    autoWatch: true,     
 
     // base path, that will be used to resolve files and exclude
     basePath: '',
@@ -21,7 +21,8 @@ module.exports = function(config) {
       'https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.3/jasmine-html.min.js',
 
       // jquery, angular, bootstrap      
-      'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js',       'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js',       
+      'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js',
       'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-mocks.js',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
@@ -30,8 +31,7 @@ module.exports = function(config) {
       './public/bin/index.js',      
 
       // test files
-      './public/js/test/easytest.js',
-      './public/js/test/config.js',
+      './public/js/test/*.js',      
       
       { pattern: './public/*.html', included: false, served: true }
     ],
@@ -58,8 +58,7 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-coverage'
+      'karma-jasmine'
     ],
 
     // Continuous Integration mode
@@ -79,8 +78,8 @@ module.exports = function(config) {
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
     
-    reporters: ['progress', 'coverage'],
-    preprocessors: { '*.js': ['coverage'] }
+    reporters: ['progress']
+    
     
     });
 };
