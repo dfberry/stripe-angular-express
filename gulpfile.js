@@ -1,20 +1,23 @@
 'use strict';
-
-var gulp = require('gulp');
 require('babel-core/register')
-const jasmine = require('gulp-jasmine');
-var gutil = require('gulp-util');
-var uglify = require('gulp-uglifyjs');
-var ugligy2 = require('gulp-uglify');
-var Server = require('karma').Server;
-var source     = require('vinyl-source-stream')
-var transform = require('vinyl-transform');
-var browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var watchify = require('watchify');
-var sourcemaps = require('gulp-sourcemaps');
-var assign = require('lodash.assign');
-var ngannotate = require('gulp-ng-annotate');
+
+var gulp = require('gulp')
+  , jasmine = require('gulp-jasmine')
+  , gutil = require('gulp-util')
+  , uglify = require('gulp-uglifyjs')
+  , ugligy2 = require('gulp-uglify')
+  , Server = require('karma').Server
+  , source     = require('vinyl-source-stream')
+  , transform = require('vinyl-transform')
+  , browserify = require('browserify')
+  , buffer = require('vinyl-buffer')
+  , watchify = require('watchify')
+  , sourcemaps = require('gulp-sourcemaps')
+  , assign = require('lodash.assign')
+  , ngannotate = require('gulp-ng-annotate')
+  , nodemon = require('gulp-nodemon')
+  , jshint = require('gulp-jshint')
+  , stylish = require('jshint-stylish');
 
 
 /****************************************************************************
@@ -71,6 +74,22 @@ gulp.task('test_once', function (done) {
     singleRun: true
   }, done).start();
 });
+
+gulp.task('server_lint', function () {
+  gulp.src('./server/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish, { verbose: true }));
+});
+
+gulp.task('node-server', function () {
+  nodemon({ script: './server/index.js'
+          , ext: 'html js'
+          , ignore: ['ignored.js']
+          , tasks: ['server_lint'] })
+    .on('restart', function () {
+      console.log('restarted!')
+    })
+})
 
 gulp.task('ci', ['js', 'test_ci']);
 gulp.task('test', ['js', 'test_once']);
