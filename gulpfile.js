@@ -14,10 +14,11 @@ var buffer = require('vinyl-buffer');
 var watchify = require('watchify');
 var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
+var ngannotate = require('gulp-ng-annotate');
 
 // add custom browserify options here
 var customOpts = {
-  entries: ['./public/js/index.js'],
+  entries: ['./public/js/mini_index.js'],
   debug: true
 };
 var opts = assign({}, watchify.args, customOpts);
@@ -28,7 +29,7 @@ var b = watchify(browserify(opts));
 //console.log(b);
 
 // add transformations here
-// i.e. b.transform(coffeeify);
+//b.transform(ngannotate);
 
 gulp.task('js', bundle); // so you can run `gulp js` to build the file
 b.on('update', bundle); // on any dep update, runs the bundler
@@ -38,15 +39,16 @@ function bundle() {
   return b.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
+    .pipe(source('mini_bundle.js'))
     //.pipe(uglify())
     // optional, remove if you don't need to buffer file contents
     .pipe(buffer())
+    .pipe(ngannotate())
     .pipe(uglify())
     // optional, remove if you dont want sourcemaps
     .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
        // Add transformation tasks to the pipeline here.
-    .pipe(sourcemaps.write('./public/dest')) // writes .map file
+    .pipe(sourcemaps.write('./')) // writes .map file
     .pipe(gulp.dest('./public/dest'));
 }
 
