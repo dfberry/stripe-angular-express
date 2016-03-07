@@ -1,4 +1,4 @@
-exports.$myappconst = function(){
+exports.$myappconst = /*@ngInject*/ function(){
      
   console.log("my test");   
   console.log("test 2");

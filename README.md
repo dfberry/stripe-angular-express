@@ -1,6 +1,5 @@
 #How to run during development
-run 'gulp' at the command line
-
+run 'gulp js' at the command line to bundle, minify, annotate the Angular front-end files
 watches file
 runs tests
 

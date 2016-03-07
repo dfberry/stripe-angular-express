@@ -10,6 +10,8 @@ var _ = require('underscore');
 
 var components = angular.module('stripe-app.components', ['ng']);
 
+console.log();
+
 _.each(controllers, function(controller, name) {
   components.controller(name, controller);
 });

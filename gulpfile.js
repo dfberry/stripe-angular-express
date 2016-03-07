@@ -16,17 +16,24 @@ var sourcemaps = require('gulp-sourcemaps');
 var assign = require('lodash.assign');
 var ngannotate = require('gulp-ng-annotate');
 
+
+/****************************************************************************
+ * 'js' task:
+ * watchify 
+ * bundles/concatenates all js files starting with head file: index.js
+ * minifies/uglifies
+ * annotates ng dependencies
+ * spits out final file to /public/dest/stripe_express_angular.js
+ * **************************************************************************/
+
 // add custom browserify options here
 var customOpts = {
-  entries: ['./public/js/mini_index.js'],
+  entries: ['./public/js/index.js'],
   debug: true
 };
 var opts = assign({}, watchify.args, customOpts);
-//console.log(opts);
 
 var b = watchify(browserify(opts)); 
-
-//console.log(b);
 
 // add transformations here
 //b.transform(ngannotate);
@@ -39,7 +46,7 @@ function bundle() {
   return b.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('mini_bundle.js'))
+    .pipe(source('stripe_express_angular.js'))
     //.pipe(uglify())
     // optional, remove if you don't need to buffer file contents
     .pipe(buffer())
@@ -52,33 +59,19 @@ function bundle() {
     .pipe(gulp.dest('./public/dest'));
 }
 
-
-
-gulp.task('watch', function() {
-  gulp.watch([
-      './public/js/*.js'
-      ,'./public/js/test/*.js'], 
-      ['browserify', 'tdd']);
-});
-
-
-gulp.task('jasmine', () =>
-	gulp.src('./test/main.test.js')
-		// gulp-jasmine works on filepaths so you can't have any plugins before it 
-		.pipe(jasmine({'verbose': true}))
-);
-
-gulp.task('tdd', function (done) {
+gulp.task('test_ci', function (done) {
   new Server({
     configFile: __dirname + '/karma.local.conf.js'
   }, done).start();
 });
 
-gulp.task('test', function (done) {
+gulp.task('test_once', function (done) {
   new Server({
     configFile: __dirname + '/karma.local.conf.js',
     singleRun: true
   }, done).start();
 });
 
-gulp.task('default', ['watch']);
+gulp.task('ci', ['js', 'test_ci']);
+gulp.task('test', ['js', 'test_once']);
+gulp.task('default', ['ci']);

@@ -1,11 +1,12 @@
-exports.TestController = function ($scope){
+exports.TestController = /*@ngInject*/ function ($scope){
     $scope.test = function(){return 2;}
     $scope.myvalue = "test value";
 }
-exports.Test2Controller = function ($scope, $myappconfig){
+exports.Test2Controller = /*@ngInject*/ function ($scope, $myappconfig){
     $scope.test = $myappconfig.donationDescription
+    this.$inject = ['$scope', '$myappconfig'];
 }
-exports.CheckoutController = function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
+exports.CheckoutController = /*@ngInject*/ function($scope, $myappmodel, $myappconst, $myappconfig, $myservice, $http) {
 
     $scope.init = function(){
         

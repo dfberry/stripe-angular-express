@@ -1,4 +1,4 @@
-exports.$myappmodel = function() {
+exports.$myappmodel = /*@ngInject*/ function() {
 
     // cart designed for stripe charge only
     var cart = {

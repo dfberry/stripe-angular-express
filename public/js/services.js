@@ -1,4 +1,4 @@
-exports.$myservice = function($http,$myappconfig){
+exports.$myservice = /*@ngInject*/ function($http,$myappconfig){
     
     var commit = function (completeCharge, callback){
         

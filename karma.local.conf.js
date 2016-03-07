@@ -28,7 +28,7 @@ module.exports = function(config) {
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js',
 
       // system under test
-      './public/bin/index.js',      
+      './public/dest/stripe_express_angular.js',      
 
       // test files
       './public/js/test/*.js',      
