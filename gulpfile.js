@@ -17,7 +17,8 @@ var gulp = require('gulp')
   , ngannotate = require('gulp-ng-annotate')
   , nodemon = require('gulp-nodemon')
   , jshint = require('gulp-jshint')
-  , stylish = require('jshint-stylish');
+  , stylish = require('jshint-stylish')
+  , mocha = require('gulp-mocha');
 
 
 /****************************************************************************
@@ -89,8 +90,14 @@ gulp.task('node-server', function () {
     .on('restart', function () {
       console.log('restarted!')
     })
-})
+});
 
-gulp.task('ci', ['lint', 'js', 'node-server','test_ci']);
-gulp.task('test', ['lint', 'js', 'node-server',  'test_once']);
+gulp.task('server-test', function () {
+	return gulp.src('./test/test.js', {read: false})
+		// gulp-mocha needs filepaths so you can't have any plugins before it 
+		.pipe(mocha({reporter: 'spec'}));
+});
+
+gulp.task('ci', ['lint', 'js', 'server-test','node-server','test_ci']);
+gulp.task('test', ['lint', 'js', 'server-test','node-server',  'test_once']);
 gulp.task('default', ['ci']);
