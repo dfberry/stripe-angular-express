@@ -1,5 +1,8 @@
 {
   "stripeKey": "sk_test_WqKypPUzUwdHSgZLT3zWZmBq",
   "stripePublishableClientKey": "pk_test_ArJPMDKT6lF2Ml4m4e8ILmiP",
-  "Characters22_StoreName": "MyStripeStore"
+  "Characters22_StoreName": "MyStripeStore",
+  "port":{
+      "stage": 3000
+  }
 }
