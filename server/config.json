@@ -4,5 +4,8 @@
   "Characters22_StoreName": "MyStripeStore",
   "port":{
       "stage": 3000
+  },
+  "model":{
+      "url": "mongodb://localhost:27017/test"
   }
 }

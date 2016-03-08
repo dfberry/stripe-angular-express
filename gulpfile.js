@@ -18,6 +18,7 @@ var gulp = require('gulp')
   , nodemon = require('gulp-nodemon')
   , jshint = require('gulp-jshint')
   , stylish = require('jshint-stylish')
+  , exec = require('child_process').exec
   , mocha = require('gulp-mocha');
 
 
@@ -62,6 +63,21 @@ function bundle() {
     .pipe(sourcemaps.write('./')) // writes .map file
     .pipe(gulp.dest('./public/dest'));
 }
+/****************************************************************************
+ * runCommand:
+ * used to start and stop mongo
+ * **************************************************************************/
+function runCommand(command) {
+  return function (cb) {
+    exec(command, function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
+  }
+}
+gulp.task('start-mongo', runCommand('mongod --dbpath ./data/'));
+gulp.task('stop-mongo', runCommand('mongo admin --eval "db.shutdownServer();"'));
 
 gulp.task('test_ci', function (done) {
   new Server({
@@ -93,7 +109,7 @@ gulp.task('node-server', function () {
 });
 
 gulp.task('server-test', function () {
-	return gulp.src('./test/test.js', {read: false})
+	return gulp.src('./test/*.js', {read: false})
 		// gulp-mocha needs filepaths so you can't have any plugins before it 
 		.pipe(mocha({reporter: 'spec'}));
 });

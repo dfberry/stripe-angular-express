@@ -15,7 +15,7 @@
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "http-status": "^0.2.0",
-    "mongoose": "^4.4.5",
+    "mongoose": "^4.4.6",
     "morgan": "^1.7.0",
     "stripe": "^4.4.0",
     "underscore": "^1.8.3",
