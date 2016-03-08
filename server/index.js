@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var wagner = require('wagner-core');
 var path = require('path');

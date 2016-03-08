@@ -75,8 +75,8 @@ gulp.task('test_once', function (done) {
   }, done).start();
 });
 
-gulp.task('server_lint', function () {
-  gulp.src('./server/*.js')
+gulp.task('lint', function () {
+  gulp.src(['./server/*.js','./public/js/*.js','./public/js/test/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter(stylish, { verbose: true }));
 });
@@ -85,12 +85,12 @@ gulp.task('node-server', function () {
   nodemon({ script: './server/index.js'
           , ext: 'html js'
           , ignore: ['ignored.js']
-          , tasks: ['server_lint'] })
+          , tasks: [''] })
     .on('restart', function () {
       console.log('restarted!')
     })
 })
 
-gulp.task('ci', ['js', 'test_ci']);
-gulp.task('test', ['js', 'test_once']);
+gulp.task('ci', ['lint', 'js', 'test_ci']);
+gulp.task('test', ['lint', 'js', 'node-server',  'test_once']);
 gulp.task('default', ['ci']);

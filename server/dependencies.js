@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 var Stripe = require('stripe');
 var configFile = require('./config.json');
