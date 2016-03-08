@@ -13,21 +13,11 @@ describe('Models', function() {
   var Customer;
 
   before(function() {
-    //var app = express();
-
-    // Bootstrap server
     models = require('../server/models')(wagner);
-    //app.use(require('../server/api')(wagner));
-
-    //server = app.listen(config.port.stage);
-
-    // Make Category model available in tests
     Customer = models.Customer;
   });
 
   after(function() {
-    // Shut the server down when we're done
-    //server.close();
   });
   
   beforeEach(function(done) {
@@ -44,7 +34,10 @@ describe('Models', function() {
     Customer.create({ name: 'dina' }, function(error, doc) {
       assert.ifError(error);
       console.log(doc);
+      
       done();
       });
     });
+    
+    it('should test through the api ');
   });
