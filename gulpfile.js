@@ -91,6 +91,6 @@ gulp.task('node-server', function () {
     })
 })
 
-gulp.task('ci', ['lint', 'js', 'test_ci']);
+gulp.task('ci', ['lint', 'js', 'node-server','test_ci']);
 gulp.task('test', ['lint', 'js', 'node-server',  'test_once']);
 gulp.task('default', ['ci']);
