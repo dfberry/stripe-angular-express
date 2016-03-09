@@ -28,7 +28,5 @@ module.exports = function(wagner) {
     });
   });
 
-  //wagner.factory('Product', require('./product'));
-
   return models;
 };

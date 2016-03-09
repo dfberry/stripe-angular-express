@@ -18,9 +18,6 @@ module.exports = function(logging) {
         res.sendFile(path.join(__dirname + '/../public/default.html'));
     });
     
-    app.get(['/charge'], function (req, res){
-
-    });
     
     app.use('/api/v1', require('./api')(wagner));
     app.use('/public', express.static(__dirname + '/../public', {   maxAge: 4 * 60 * 60 * 1000 /* 2hrs */ }));

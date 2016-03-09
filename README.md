@@ -7,5 +7,8 @@ runs tests
 Client-side testing is karma/jasmine
 Server-side testing is mocha
 
+#SuperAgent docs
+http://visionmedia.github.io/superagent/#request-basics
+
 #Does NOT have much styling (css, sass, less)
 Add styling yourself
