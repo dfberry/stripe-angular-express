@@ -5,6 +5,7 @@ var wagner = require('wagner-core');
 var path = require('path');
 
 require('./dependencies')(wagner);
+require('./models')(wagner);
 
 module.exports = function(logging) {
   var app = express();

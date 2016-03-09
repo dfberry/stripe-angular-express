@@ -11,13 +11,13 @@ module.exports = function(wagner) {
     return mongoose;
   });
 
-  //var Charge =
-    //mongoose.model('Category', require('./model_charge'), 'charges');
+  var Transaction =
+    mongoose.model('Transaction', require('./model_transaction'), 'transactions');
   var Customer =
     mongoose.model('Customer', require('./model_customer'), 'customers');
 
   var models = {
-    //Charge: Charge,
+    Transaction: Transaction,
     Customer: Customer
   };
 

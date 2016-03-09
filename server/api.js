@@ -13,7 +13,7 @@ module.exports = function(wagner) {
   api.use(bodyparser.json());
 
   /* Stripe Checkout API */
-  api.post('/checkout', wagner.invoke(function(Stripe) {
+  api.post('/checkout', wagner.invoke(function(Stripe, Transaction) {      
             
     return function(req, res) {
 
@@ -36,6 +36,8 @@ module.exports = function(wagner) {
 
         console.log("server stripe charge request object = " + JSON.stringify(stripeCharge)+ "\n");
 
+        
+
         // Charge the card NOW
         Stripe.charges.create(stripeCharge,function(err, charge) {
             
@@ -47,6 +49,25 @@ module.exports = function(wagner) {
                 status(status.INTERNAL_SERVER_ERROR).
                 json({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
+            
+            //TODO: Better/more meaningful capture
+            Transaction.create({
+                transaction: 'charge', 
+                request: stripeCharge, 
+                response: charge, 
+                error: err,
+                token: req.body.stripeToken,
+                cart: req.body.cart,
+                customer: req.body.customer
+            }, function(error, doc){
+                
+                if (error){
+                    console.log('Transaction not created: ' + error);
+                }
+                console.log(doc);
+                
+            });
+            
             return res.json(charge);
         }); 
 

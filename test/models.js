@@ -33,8 +33,6 @@ describe('Models', function() {
     // Create a single category
     Customer.create({ name: 'dina' }, function(error, doc) {
       assert.ifError(error);
-      console.log(doc);
-      
       done();
       });
     });
