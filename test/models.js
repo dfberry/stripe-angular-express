@@ -6,30 +6,41 @@ var wagner = require('wagner-core')
 
 describe('Models', function() {
 
-    var dbConnection;
+    var dbModelGenerator;
 
     before(function() {
-
+        dbModelGenerator = wagner.get('db');   
     });
 
     after(function(done) {
-        wagner.get("db").close();
+        dbModelGenerator.close();  
+        console.log("end of after");
         done();
     });
 
     it('customer', function(done) {
-        var Customer = models.Customer;
+        this.timeout(5000);
+        var Customer = dbModelGenerator.model('Customer');
         var myobj = {name: 'test-name ' +  Date().toString()};
-        
-        Customer.create(myobj, function(error, doc){
-            assert.ifError(error);        
-            Customer.find(myobj, function (err, docs){
-                
-                assert.ifError(err);
-                assert.equal(docs.length,1);
-                assert.equal(docs[0].name, myobj.name);
-            })    
-            done();
-        });
+       
+        console.log("before try");
+       
+        try {  
+            Customer.create(myobj, function(error, doc){
+                assert.ifError(error); 
+                console.log("after create");
+                Customer.find(myobj, function (err, docs){
+                    
+                    assert.ifError(err);
+                    assert.equal(docs.length,1);
+                    assert.equal(docs[0].name, myobj.name);
+                    console.log("end of it test");
+                    done();
+                })                
+            });
+        } catch (x) {
+            console.log("caught - " + x);
+            done(x);
+        }
     });
 });

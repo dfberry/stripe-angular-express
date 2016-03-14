@@ -16,10 +16,10 @@ var mongoOptions =
     }
 };
     
-  //var db = mongoose.createConnection(config.model.url);
-  var dbHost = mongoose.connect(config.model.url, mongoOptions);
+  var db = mongoose.createConnection(config.model.url, mongoOptions);
+  //var dbHost = mongoose.connect(config.model.url, mongoOptions);
   
-  var db = mongoose.connection;
+  //var db = mongoose.connection;
 
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function(){
