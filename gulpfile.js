@@ -109,7 +109,7 @@ gulp.task('node-server', function () {
 });
 
 gulp.task('server-test', function () {
-	return gulp.src('./test/*.js', {read: false})
+	return gulp.src(['./test/*.js'])
 		// gulp-mocha needs filepaths so you can't have any plugins before it 
 		.pipe(mocha({reporter: 'spec'}));
 });

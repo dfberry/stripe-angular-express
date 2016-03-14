@@ -5,10 +5,30 @@ var _ = require('underscore');
 var config = require('./config.json');
 
 module.exports = function(wagner) {
-  mongoose.connect(config.model.url);
+    
+var mongoOptions =
+{
+    db: {safe: true},
+    server: {
+        socketOptions: {
+            keepAlive: 1
+        }
+    }
+};
+    
+  //var db = mongoose.createConnection(config.model.url);
+  var dbHost = mongoose.connect(config.model.url, mongoOptions);
+  
+  var db = mongoose.connection;
+
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function(){
+        //console.log("Connected to DB");
+    //do operations which involve interacting with DB.
+    });
 
   wagner.factory('db', function() {
-    return mongoose;
+    return db;
   });
 
   var Transaction =

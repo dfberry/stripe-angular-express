@@ -1,75 +1,35 @@
 'use strict';
 
-var models = require('../server/models');
-var wagner = require('wagner-core');
-var express = require('express');
-var config = require('../server/config.json');
-var assert = require('assert');
-
-var baseUrl = 'localhost:' + config.port.stage;
+var wagner = require('wagner-core')
+    , assert = require('assert')
+    , models = require('../server/models')(wagner);
 
 describe('Models', function() {
-    var server;
-    var Customer;
-    var Transaction;
+
+    var dbConnection;
 
     before(function() {
-        models = require('../server/models')(wagner);
-        Customer = models.Customer;
-        Transaction = models.Transaction;
+
     });
 
-    after(function() {
-        // Make sure customer are empty before each test
-        Customer.remove({}, function(error) {
-            assert.ifError(error);
-            
-        });
-        
-        Transaction.remove({transaction: "auto-test"}, function(error){
-            assert.ifError(error);
-            
-        });
-        
+    after(function(done) {
+        wagner.get("db").close();
+        done();
     });
 
-    beforeEach(function(done) {
-        // Make sure customer are empty before each test
-        Customer.remove({}, function(error) {
-            assert.ifError(error);
-            
-        });
+    it('customer', function(done) {
+        var Customer = models.Customer;
+        var myobj = {name: 'test-name ' +  Date().toString()};
         
-        Transaction.remove({transaction: "auto-test"}, function(error){
-            assert.ifError(error);
-            done();
-        });
-        
-    });
-
-    it('creates single customer', function(done) {
-
-        // Create a single category
-        Customer.create({ name: 'dina' }, function(error, doc) {
-            assert.ifError(error);
+        Customer.create(myobj, function(error, doc){
+            assert.ifError(error);        
+            Customer.find(myobj, function (err, docs){
+                
+                assert.ifError(err);
+                assert.equal(docs.length,1);
+                assert.equal(docs[0].name, myobj.name);
+            })    
             done();
         });
     });
-
-    it('should test through the api ');
-    
-    it('creates transaction', function(done){
-        Transaction.create({
-              transaction: "auto-test",
-                request: {},
-                response: {},
-                token: {},
-                error: {},
-                customer:{},
-                cart:{}
-        }, function(error,doc){
-            assert.ifError(error);
-            done();
-        });
-    })
 });

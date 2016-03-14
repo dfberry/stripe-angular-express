@@ -115,7 +115,7 @@ describe('creditcard test', function() {
 
         // ARRANGE - Get Token
         ccService.token(card,Stripe, function(error, token){
-            
+            console.log("token returned = " + token.id);
             assert.ifError(error);
             
             // ARRANGE DATA 2

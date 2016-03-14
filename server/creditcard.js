@@ -7,10 +7,16 @@
  */
 exports.token = function(card,Stripe,callback){
     
+    //console.log("server/creditcard.js::token - top");
+    //console.log("card=" + JSON.stringify(card));
+    //console.log("Stripe=" + JSON.stringify(Stripe));
+    
     Stripe.tokens.create(card, function(err, token) {
         if (err){
+            //console.log("server/creditcard.js::token - error = " + err);
             callback(err);
         }
+        //console.log("server/creditcard.js::token - success");
         callback(err, token);
     });
 }
@@ -47,7 +53,7 @@ exports.charge = function(charge, storeName, Stripe, Transaction, callback) {
             if (err) {
                 callback ({ error: err.toString(), charge: err.raw.charge, request: err.requestId, type : err.type});
             }
-
+/*
                 Transaction.create({
                     transaction: 'charge', 
                     request: stripeCharge, 
@@ -64,7 +70,9 @@ exports.charge = function(charge, storeName, Stripe, Transaction, callback) {
                     callback (null,charge);
                     
                 });
+*/
 
+                callback (null, charge);
         }); 
 
      };

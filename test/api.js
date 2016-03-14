@@ -64,21 +64,19 @@ var customer = {
     email: 'bob@company.com'   
 };
 
-var getTokenId = function(callback){
+var getTokenId = function(card, callback){
     
-   card = {
-        card: {
-            "number": '4242424242424242',
-            "exp_month": 12,
-            "exp_year": 2017,
-            "cvc": '123'
-        }
-    };
+  //console.log("top of getTokenId");  
+    
+
     
     var ccService = require("../server/creditcard");
     var Stripe =wagner.get("Stripe");
 
+    //console.log("about to get token");
+
     ccService.token(card,Stripe, function(error, token){
+        console.log("token returned = " + token.id);
         assert.ifError(error);
         callback(error,token.id);
     }); 
@@ -88,23 +86,39 @@ describe('api test', function() {
     
     var server=null;
 
-    beforeEach(function() {
+    before(function() {
         server = app().listen(config.port.stage, function() {
-            console.log("server started");
+            //console.log("server started");
         });
     });
 
-    afterEach(function() {
+    after(function() {
         server.close(function() {
-            console.log("server stopped");
+            //console.log("server stopped");
         });
     });
     
     
     it('charge is successful, returns 200', function(done){
         
+        //console.log("top of charge test");
+ 
+        card = {
+            card: {
+                "number": '4242424242424242',
+                "exp_month": 12,
+                "exp_year": 2017,
+                "cvc": '123'
+            }
+        };
+        
         // ARRANGE token id
-        getTokenId(function(err,tokenId){
+        getTokenId(card, function(err,tokenId){
+                        
+            //console.log("getTokenId returned = " + tokenId);
+            
+            assert.ifError(err);
+                        
                         
             // ARRANGE charge data
             var chargeRequestObject = { 
