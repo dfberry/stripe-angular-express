@@ -4,8 +4,6 @@ var express = require('express');
 var wagner = require('wagner-core');
 var path = require('path');
 
-var unittest = false;
-
 var cli=false; // http instead
 
 require('./dependencies')(wagner);

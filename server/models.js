@@ -14,8 +14,9 @@ var mongoOptions =
     db: {safe: true},
     server: {
         socketOptions: {
-            keepAlive: 1
-        }
+            keepAlive: 120
+        },
+        poolSize: 10
     }
 };
   if (cli){
