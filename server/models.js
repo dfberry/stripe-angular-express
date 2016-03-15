@@ -27,7 +27,7 @@ var mongoOptions =
     //do operations which involve interacting with DB.
 
       });
-  }  else {
+  }  else { // http
       var db = mongoose.connect(config.model.url, mongoOptions);
   }
 
