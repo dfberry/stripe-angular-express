@@ -68,7 +68,6 @@ describe('creditcard test', function() {
     
     after(function(done) {
         //mydb.connection.close(); 
-        console.log("end of after");
         done();
     });
 
