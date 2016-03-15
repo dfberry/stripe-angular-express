@@ -1,10 +1,11 @@
 'use strict';
+var unittest = true;
 
 var config = require('../server/config.json')
     , assert = require('assert')
     , wagner = require('wagner-core')
     , dependencies = require('../server/dependencies')(wagner)
-    , models = require('../server/models')(wagner);
+    , models = require('../server/models')(wagner,unittest);
 
 // cart designed for stripe charge only
 var cart = {
@@ -62,6 +63,14 @@ var customer = {
 };
 
 describe('creditcard test', function() {
+    
+    var mydb = wagner.get('db'); 
+    
+    after(function(done) {
+        //mydb.connection.close(); 
+        console.log("end of after");
+        done();
+    });
 
     it('creditcard.token returns token.id', function(done){
         
@@ -126,7 +135,7 @@ describe('creditcard test', function() {
             };
             
             // ARRANGE Dependency
-            var Transaction = wagner.get("Transaction");
+            var Transaction = models.Transaction;
             
             // ACT
             ccService.charge(chargeRequestObject, "Mocha Test", Stripe, Transaction, function(err, result){

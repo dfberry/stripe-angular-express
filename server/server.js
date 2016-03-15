@@ -4,8 +4,10 @@ var express = require('express');
 var wagner = require('wagner-core');
 var path = require('path');
 
+var unittest = false;
+
 require('./dependencies')(wagner);
-require('./models')(wagner);
+require('./models')(wagner, unittest);
 
 module.exports = function(logging) {
   var app = express();

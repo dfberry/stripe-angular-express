@@ -118,7 +118,7 @@ gulp.task('server-test', function () {
     var filelist3 =  ['./test/*.js'];
 
     
-	return gulp.src(filelist2)
+	return gulp.src(filelist)
 		// gulp-mocha needs filepaths so you can't have any plugins before it 
 		.pipe(mocha({reporter: 'spec'}));
 });

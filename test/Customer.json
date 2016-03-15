@@ -1,0 +1,78 @@
+{ [Function: Model]
+  db: 
+   NativeConnection {
+     base: 
+      Mongoose {
+        connections: [Object],
+        plugins: [],
+        models: [Object],
+        modelSchemas: [Object],
+        options: [Object] },
+     collections: { customers: [Object] },
+     models: { Customer: [Circular] },
+     config: { autoIndex: true },
+     replica: false,
+     hosts: null,
+     host: 'localhost',
+     port: 27017,
+     user: undefined,
+     pass: undefined,
+     name: 'test',
+     options: { db: [Object], server: [Object], auth: {}, replset: [Object] },
+     otherDbs: [],
+     _readyState: 2,
+     _closeCalled: false,
+     _hasOpened: false,
+     _listening: false,
+     db: 
+      EventEmitter {
+        domain: null,
+        _events: {},
+        _eventsCount: 0,
+        _maxListeners: undefined,
+        s: [Object],
+        serverConfig: [Getter],
+        bufferMaxEntries: [Getter],
+        databaseName: [Getter],
+        options: [Getter],
+        native_parser: [Getter],
+        slaveOk: [Getter],
+        writeConcern: [Getter] },
+     _events: { error: [Function: bound bound ], open: [Object] },
+     _eventsCount: 2 },
+  collection: 
+   NativeCollection {
+     collection: null,
+     opts: { bufferCommands: true, capped: false },
+     name: 'customers',
+     collectionName: 'customers',
+     conn: 
+      NativeConnection {
+        base: [Object],
+        collections: [Object],
+        models: [Object],
+        config: [Object],
+        replica: false,
+        hosts: null,
+        host: 'localhost',
+        port: 27017,
+        user: undefined,
+        pass: undefined,
+        name: 'test',
+        options: [Object],
+        otherDbs: [],
+        _readyState: 2,
+        _closeCalled: false,
+        _hasOpened: false,
+        _listening: false,
+        db: [Object],
+        _events: [Object],
+        _eventsCount: 2 },
+     queue: [],
+     buffer: true,
+     emitter: 
+      EventEmitter {
+        domain: null,
+        _events: {},
+        _eventsCount: 0,
+        _maxListeners: undefined } } }
