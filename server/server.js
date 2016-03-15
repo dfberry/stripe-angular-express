@@ -6,8 +6,10 @@ var path = require('path');
 
 var unittest = false;
 
+var cli=false; // http instead
+
 require('./dependencies')(wagner);
-require('./models')(wagner, unittest);
+require('./models')(wagner, cli);
 
 module.exports = function(logging) {
   var app = express();

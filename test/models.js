@@ -1,8 +1,10 @@
 'use strict';
 
+var cli = true;
+
 var wagner = require('wagner-core')
     , assert = require('assert')
-    , models = require('../server/models')(wagner);
+    , models = require('../server/models')(wagner,cli);
 
 describe('Models', function() {
 

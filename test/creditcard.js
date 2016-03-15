@@ -1,11 +1,11 @@
 'use strict';
-var unittest = true;
+var cli = true;
 
 var config = require('../server/config.json')
     , assert = require('assert')
     , wagner = require('wagner-core')
     , dependencies = require('../server/dependencies')(wagner)
-    , models = require('../server/models')(wagner,unittest);
+    , models = require('../server/models')(wagner,cli);
 
 // cart designed for stripe charge only
 var cart = {

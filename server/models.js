@@ -4,7 +4,10 @@ var mongoose = require('mongoose');
 var _ = require('underscore');
 var config = require('./config.json');
 
-module.exports = function(wagner) {
+// @wagner dependency injection
+// @cli true if called from cli, false if called from http
+// @cli needs N connections, http does not
+module.exports = function(wagner, cli) {
     
 var mongoOptions =
 {
@@ -15,21 +18,21 @@ var mongoOptions =
         }
     }
 };
-    
-  var db = mongoose.createConnection(config.model.url, mongoOptions);
-  //var dbHost = mongoose.connect(config.model.url, mongoOptions);
-  
-  //var db = mongoose.connection;
-
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', function(){
+  if (cli){
+      var db = mongoose.createConnection(config.model.url, mongoOptions);
+      db.on('error', console.error.bind(console, 'connection error:'));
+      db.once('open', function(){
         //console.log("Connected to DB");
     //do operations which involve interacting with DB.
-    });
 
-  wagner.factory('db', function() {
-    return db;
-  });
+      });
+  }  else {
+      var db = mongoose.connect(config.model.url, mongoOptions);
+  }
+
+    wagner.factory('db', function() {
+        return db;
+    });
 
   var Transaction =
     mongoose.model('Transaction', require('./model_transaction'), 'transactions');
